@@ -22,15 +22,6 @@ export default Ember.Component.extend(TableCommon, {
       label: 'Last Name',
       valuePath: 'lastName',
       width: '150px'
-    }, {
-      label: 'Address',
-      valuePath: 'address'
-    }, {
-      label: 'State',
-      valuePath: 'state'
-    }, {
-      label: 'Country',
-      valuePath: 'country'
     }];
   })
 });
