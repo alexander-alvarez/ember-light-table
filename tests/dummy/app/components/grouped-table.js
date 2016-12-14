@@ -7,6 +7,7 @@ const {
 } = Ember;
 
 export default Ember.Component.extend(TableCommon, {
+  classNameBindings: [':grouped-table'],
   columns: computed(function() {
     return [{
       label: 'User Details',
@@ -14,11 +15,9 @@ export default Ember.Component.extend(TableCommon, {
       align: 'center',
 
       subColumns: [{
-        label: 'Avatar',
-        valuePath: 'avatar',
-        width: '60px',
-        sortable: false,
-        cellComponent: 'user-avatar'
+        label: '',
+        width: '10px',
+        sortable: false
       }, {
         label: 'First',
         valuePath: 'firstName',

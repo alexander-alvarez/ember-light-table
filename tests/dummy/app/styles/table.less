@@ -51,7 +51,7 @@
     }
 
     &.lt-group-column {
-      border: none !important;
+      border: none;
       padding-bottom: 10px;
     }
 
@@ -109,4 +109,23 @@ tfoot {
     display: flex;
     justify-content: space-between;
   }
+}
+
+
+.grouped-table .lt-column, .grouped-table .lt-column.lt-group-column {
+  border-right: 1px solid black !important;
+}
+
+.grouped-table .lt-row  .lt-cell {
+  border-right: 1px solid black;
+}
+
+.grouped-table {
+  counter-reset: row-counter;
+}
+
+.grouped-table .lt-row  .lt-cell:first-of-type:before {
+  counter-increment: row-counter;
+  content: counter(row-counter);
+  margin: -10px;
 }
