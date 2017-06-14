@@ -30,6 +30,7 @@ export default Ember.Mixin.create({
     this._super(...arguments);
 
     let table = new Table(this.get('columns'), this.get('model'), { enableSync: this.get('enableSync') });
+    let table2 = new Table([...this.get('columns2')], this.get('model'), { enableSync: this.get('enableSync') });
     let sortColumn = table.get('allColumns').findBy('valuePath', this.get('sort'));
 
     // Setup initial sort column
@@ -38,6 +39,8 @@ export default Ember.Mixin.create({
     }
 
     this.set('table', table);
+    this.set('table2', table2);
+
   },
 
   fetchRecords: task(function*() {

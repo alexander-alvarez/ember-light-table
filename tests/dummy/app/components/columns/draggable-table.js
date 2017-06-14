@@ -50,6 +50,50 @@ export default Ember.Component.extend(TableCommon, {
         draggable: true
       }]
     }];
+  }),
+  columns2: computed(function() {
+    return [{
+      label: 'User Details2',
+      sortable: false,
+      align: 'center',
+      draggable: true,
+      subColumns: [{
+        label: 'Avatar2',
+        valuePath: 'avatar',
+        width: '60px',
+        sortable: false,
+        draggable: true,
+        cellComponent: 'user-avatar'
+      }, {
+        label: 'First2',
+        valuePath: 'firstName',
+        width: '150px',
+        draggable: true
+      }, {
+        label: 'Last',
+        valuePath: 'lastName',
+        width: '150px',
+        draggable: true
+      }]
+    }, {
+      label: 'Contact Information2',
+      sortable: false,
+      align: 'center',
+      draggable: true,
+      subColumns: [{
+        label: 'Address2',
+        valuePath: 'address',
+        draggable: true
+      }, {
+        label: 'State2',
+        valuePath: 'state',
+        draggable: true
+      }, {
+        label: 'Country2',
+        valuePath: 'country',
+        draggable: true
+      }]
+    }];
   })
 });
 // END-SNIPPET
