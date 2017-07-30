@@ -13,8 +13,8 @@ const {
 export default Mixin.create({
   store: inject.service(),
 
-  page: 0,
-  limit: 10,
+  page: 1,
+  limit: 1000,
   dir: 'asc',
   sort: 'firstName',
 
@@ -39,6 +39,7 @@ export default Mixin.create({
     }
 
     this.set('table', table);
+    this.get('fetchRecords').perform();
   },
 
   fetchRecords: task(function*() {
