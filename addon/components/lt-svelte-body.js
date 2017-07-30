@@ -8,8 +8,8 @@ const { computed } = Ember;
 export default LTBodyComponent.extend({
   layout,
 
-  heightStyle: computed('sharedOptions.height', function() {
-    const height = this.get('sharedOptions.height');
-    return cssStyleify({ height });
+  style: computed('sharedOptions.height', function() {
+    let height = this.get('sharedOptions.height');
+    return cssStyleify({ height, 'overflow-x': 'auto' });
   })
 });

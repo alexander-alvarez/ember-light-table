@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import layout from 'ember-light-table/templates/components/lt-body';
 import Row from 'ember-light-table/classes/Row';
-import cssStyleify from 'ember-light-table/utils/css-styleify';
 
 const {
   Component,
@@ -300,19 +299,13 @@ export default Component.extend({
 
   _prevSelectedIndex: -1,
 
-  style: computed('sharedOptions.height', function() {
-    let height = this.get('sharedOptions').height;
-
-    return cssStyleify({ height, 'overflow-x': 'auto' });
-  }),
-
   init() {
     this._super(...arguments);
 
     /*
-     We can only set `useVirtualScrollbar` once all contextual components have
-     been initialized since fixedHeader and fixedFooter are set on t.head and t.foot
-     initialization.
+      We can only set `useVirtualScrollbar` once all contextual components have
+      been initialized since fixedHeader and fixedFooter are set on t.head and t.foot
+      initialization.
      */
     run.once(this, this._setupVirtualScrollbar);
   },
@@ -430,8 +423,8 @@ export default Component.extend({
       if (canSelect) {
         if (e.shiftKey && multiSelect) {
           rows
-          .slice(Math.min(currIndex, prevIndex), Math.max(currIndex, prevIndex) + 1)
-          .forEach((r) => r.set('selected', !isSelected));
+            .slice(Math.min(currIndex, prevIndex), Math.max(currIndex, prevIndex) + 1)
+            .forEach((r) => r.set('selected', !isSelected));
         } else if ((!multiSelectRequiresKeyboard || (e.ctrlKey || e.metaKey)) && multiSelect) {
           row.toggleProperty('selected');
         } else {
