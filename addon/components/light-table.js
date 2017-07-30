@@ -198,7 +198,7 @@ const LightTable = Component.extend({
 
   style: computed('totalWidth', function() {
     let totalWidth = this.get('totalWidth');
-    let style = {}
+    let style = {}; // this.getProperties(['height']);
 
     if (totalWidth) {
       style.width = totalWidth;

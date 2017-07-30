@@ -17,7 +17,7 @@ const {
 /**
  * ```hbs
  * {{#light-table table as |t|}}
- *   {{#t.body multiSelect=true onRowClick=(action 'rowClicked')}}
+ *   {{#t.body multiSelect=true onRowClick=(action 'rowClicked') as |body|}}
  *     {{#body.expanded-row as |row|}}
  *       Hello <b>{{row.firstName}}</b>
  *     {{/body.expanded-row}}
@@ -162,6 +162,21 @@ export default Component.extend({
    * @default false
    */
   overwrite: false,
+
+  /**
+   * If true, the body will prepend an invisible `<tr>` that scaffolds the
+   * widths of the table cells.
+   *
+   * ember-light-table uses [`table-layout: fixed`](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout).
+   * This means, that the widths of the columns are defined by the first row
+   * only. By prepending this scaffolding row, widths of columns only need to
+   * be specified once.
+   *
+   * @property enableScaffolding
+   * @type {Boolean}
+   * @default false
+   */
+  enableScaffolding: false,
 
   /**
    * ID of main table component. Used to generate divs for ember-wormhole
@@ -346,7 +361,7 @@ export default Component.extend({
       });
     } else if (scrollToRow !== _scrollToRow) {
       if (scrollToRow instanceof Row) {
-        let rowElement = document.querySelector(`[data-row-id=${scrollToRow.get('rowId')}]`);
+        let rowElement = this.element.querySelector(`[data-row-id=${scrollToRow.get('rowId')}]`);
 
         if (rowElement instanceof Element) {
           targetScrollOffset = rowElement.offsetTop;

@@ -3,12 +3,14 @@ import Row from 'ember-light-table/classes/Row';
 import Column from 'ember-light-table/classes/Column';
 import SyncArrayProxy from 'ember-light-table/-private/sync-array-proxy';
 import { mergeOptionsWithGlobals } from 'ember-light-table/-private/global-options';
+import fixProto from 'ember-light-table/utils/fix-proto';
 
 const {
   get,
   computed,
   isNone,
-  A: emberArray
+  A: emberArray,
+  Object: EmberObject
 } = Ember;
 
 const RowSyncArrayProxy = SyncArrayProxy.extend({
@@ -30,7 +32,7 @@ const RowSyncArrayProxy = SyncArrayProxy.extend({
  * @module Table
  * @class Table
  */
-export default class Table extends Ember.Object.extend({
+export default class Table extends EmberObject.extend({
   /**
    * @property columns
    * @type {Ember.Array}
@@ -143,15 +145,18 @@ export default class Table extends Ember.Object.extend({
    * @param  {Array} columns
    * @param  {Array} rows
    * @param  {Object} options
-   *    - enableSync ( _Boolean_ ): If true, creates a two way sync between the table's rows
-   *                                and the passed rows collection
+   * @param  {Boolean} options.enableSync If `true`, creates a two way sync
+   *           between the table's rows and the passed rows collection. Also see
+   *           `setRowsSynced(rows)`.
+   * @param  {Object}  options.rowOptions Options hash passed through to
+   *           `createRow(content, options)`.
    */
   constructor(columns = [], rows = [], options = {}) {
     super();
 
-    let _columns = emberArray(Table.createColumns(columns));
-    let _rows = emberArray(Table.createRows(rows));
     let _options = mergeOptionsWithGlobals(options);
+    let _columns = emberArray(Table.createColumns(columns));
+    let _rows = emberArray(Table.createRows(rows, _options.rowOptions));
 
     if (_options.enableSync) {
       _rows = RowSyncArrayProxy.create({
@@ -187,6 +192,26 @@ export default class Table extends Ember.Object.extend({
    */
   setRows(rows = [], options = {}) {
     return this.get('rows').setObjects(Table.createRows(rows, options));
+  }
+
+  /**
+   * The same as `setRows`, however the given array is synced, meaning that
+   * mutating the array also updates the table and vice-versa.
+   *
+   * Also see `enableSync` in the constructor options.
+   *
+   * @method setRowsSynced
+   * @param  {Array} rows
+   * @param  {Object} options
+   * @return {Array} rows
+   */
+  setRowsSynced(rows = [], options = {}) {
+    let _rows = RowSyncArrayProxy.create({
+      syncArray: rows,
+      content: emberArray(Table.createRows(rows, options))
+    });
+
+    return this.set('rows', _rows);
   }
 
   /**
@@ -424,3 +449,6 @@ export default class Table extends Ember.Object.extend({
     return columns.map((c) => Table.createColumn(c));
   }
 }
+
+// https://github.com/offirgolan/ember-light-table/issues/436#issuecomment-310138868
+fixProto(Table);

@@ -1,7 +1,10 @@
 import Ember from 'ember';
 
 const {
-  computed
+  computed,
+  isEmpty,
+  Mixin,
+  warn
 } = Ember;
 
 /**
@@ -14,7 +17,7 @@ const {
  * @private
  */
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
    * @property table
    * @type {Table}
@@ -66,6 +69,25 @@ export default Ember.Mixin.create({
   resizeOnDrag: false,
 
   /**
+   * CSS classes to be applied to an `<i class="lt-sort-icon"></i>` tag that is
+   * inserted into the column's `<th>` element when the column is sortable but
+   * not yet sorted.
+   *
+   * For instance, if you have installed `ember-font-awesome` or include the
+   * `font-awesome` assets manually (e.g. via a CDN), you can set
+   * `iconSortable` to `'fa fa-sort'`, which would yield this markup:
+   * `<i class="lt-sort-icon fa fa-sort"></i>`
+   *
+   * @property iconSortable
+   * @type {String}
+   * @default ''
+   */
+  iconSortable: '',
+
+  /**
+   * See `iconSortable`.  CSS classes to apply to `<i class="lt-sort-icon"></i>`
+   * when the column is sorted ascending.
+   *
    * @property iconAscending
    * @type {String}
    * @default ''
@@ -73,6 +95,9 @@ export default Ember.Mixin.create({
   iconAscending: '',
 
   /**
+   * See `iconSortable`.  CSS classes to apply to `<i class="lt-sort-icon"></i>`
+   * when the column is sorted descending.
+   *
    * @property iconDescending
    * @type {String}
    * @default ''
@@ -90,9 +115,22 @@ export default Ember.Mixin.create({
   subColumns: computed.readOnly('table.visibleSubColumns'),
   columns: computed.readOnly('table.visibleColumns'),
 
-  sortIcons: computed('iconAscending', 'iconDescending', function() {
-    return this.getProperties(['iconAscending', 'iconDescending']);
+  sortIcons: computed('iconSortable', 'iconAscending', 'iconDescending', function() {
+    return this.getProperties(['iconSortable', 'iconAscending', 'iconDescending']);
   }).readOnly(),
+
+  init() {
+    this._super(...arguments);
+
+    let fixed = this.get('fixed');
+    let height = this.get('sharedOptions.height');
+
+    warn(
+      'You did not set a `height` attribute for your table, but marked a header or footer to be fixed. This means that you have to set the table height via CSS. For more information please refer to:  https://github.com/offirgolan/ember-light-table/issues/446',
+      !fixed || fixed && !isEmpty(height),
+      { id: 'ember-light-table.height-attribute' }
+    );
+  },
 
   actions: {
     /**
