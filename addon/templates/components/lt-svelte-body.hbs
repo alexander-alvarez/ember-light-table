@@ -11,6 +11,7 @@
     scrollTo=targetScrollOffset
     onScrollY=(action 'onScroll')
   }}
+    <div id={{concat tableId '_inline_head'}} class="lt-inline lt-head"></div>
     <div class="lt-table-height-fixer" style="{{style}}">
       <table class={{tableClassNames}}>
         {{#vertical-collection

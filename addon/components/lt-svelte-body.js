@@ -10,6 +10,9 @@ export default LTBodyComponent.extend({
 
   style: computed('sharedOptions.height', function() {
     let height = this.get('sharedOptions.height');
-    return cssStyleify({ height, 'overflow-x': 'auto' });
+    const [num, units] = height.split(/(.*[0-9])([a-z].*)/).filter((s) => s.length);
+    // TODO do this dynamic
+    const newHeight = `${Number.parseInt(num) - 5}${units}`;
+    return cssStyleify({ height: newHeight, 'overflow-x': 'auto' });
   })
 });
