@@ -19,7 +19,6 @@ const Row = Component.extend({
   canExpand: false,
   canSelect: false,
   colspan: 1,
-
   isSelected: computed.readOnly('row.selected'),
   isExpanded: computed.readOnly('row.expanded')
 });
