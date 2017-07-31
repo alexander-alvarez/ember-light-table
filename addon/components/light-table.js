@@ -180,8 +180,8 @@ const LightTable = Component.extend({
     unit = unit[0];
 
     /*
-     1. Check if all widths are present
-     2. Check if all widths are the same unit
+      1. Check if all widths are present
+      2. Check if all widths are the same unit
      */
     for (let i = 0; i < widths.length; i++) {
       let width = widths[i];
@@ -196,9 +196,9 @@ const LightTable = Component.extend({
     return `${totalWidth}${unit}`;
   }),
 
-  style: computed('totalWidth', function() {
+  style: computed('totalWidth', 'height', function() {
     let totalWidth = this.get('totalWidth');
-    let style = {}; // this.getProperties(['height']);
+    let style = this.getProperties(['height']);
 
     if (totalWidth) {
       style.width = totalWidth;
