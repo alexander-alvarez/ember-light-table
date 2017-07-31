@@ -13,8 +13,8 @@ const {
 export default Mixin.create({
   store: inject.service(),
 
-  page: 1,
-  limit: 1000,
+  page: 0,
+  limit: 10,
   dir: 'asc',
   sort: 'firstName',
 
