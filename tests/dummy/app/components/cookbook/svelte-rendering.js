@@ -30,7 +30,7 @@ export default Component.extend(TableCommon, {
     }, {
       label: 'State',
       valuePath: 'state',
-      width: '15px'
+      width: '50px'
     }, {
       label: 'Country',
       valuePath: 'country',

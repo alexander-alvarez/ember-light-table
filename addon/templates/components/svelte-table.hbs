@@ -12,16 +12,31 @@
     sharedOptions=sharedOptions
     renderInPlace=true
   }}
-  {{!--
-  <tbody class="lt-body">
-  <tr class="lt-scaffolding-row">
-    {{#each table.visibleColumns as |column|}}
-      <td style="{{html-safe (if column.width (concat 'width: ' column.width))}}; height:0" class="lt-scaffolding"></td>
-    {{/each}}
-  </tr>
-  </tbody> --}}
+  {{!--  <tbody class="lt-body">
+    <tr class="lt-scaffolding-row">
+      {{#each table.visibleColumns as |column|}}
+        <td style="{{html-safe (if column.width (concat 'width: ' column.width))}}" class="lt-scaffolding"></td>
+      {{/each}}
+    </tr>
+    </tbody> --}}
 </table>
-
+<table class={{tableClassNames}}>
+  {{lt-svelte-body
+    tableId=elementId
+    table=table
+    tableActions=tableActions
+    tableClassNames=tableClassNames
+    sharedOptions=sharedOptions
+  }}
+</table>
+{{lt-foot
+  tableId=elementId
+  table=table
+  tableActions=tableActions
+  tableClassNames=tableClassNames
+  sharedOptions=sharedOptions
+  renderInPlace=true
+}}
 
 
 

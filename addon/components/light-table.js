@@ -192,7 +192,6 @@ const LightTable = Component.extend({
 
       totalWidth += parseInt(width, 10);
     }
-    debugger
     return `${totalWidth}${unit}`;
   }),
 
